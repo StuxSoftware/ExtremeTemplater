@@ -174,7 +174,7 @@
   -- to(max, [pos, max_pos]) -> pos, max_pos
   tenv.to = function(offset, pos, max_pos)
     pos, max_pos = timing_defaults(pos, max_pos)
-    if offset>=pos then
+    if offset<pos then
       return offset, offset
     end
     return pos, offset
