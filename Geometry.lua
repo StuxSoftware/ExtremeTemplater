@@ -152,7 +152,7 @@
       for j = 1,#(p[i+1]) do
         local _pval = 0
         
-        if point[j] ~= nil do
+        if point[j] ~= nil then
           _pval = point[j]
         end
         
@@ -188,7 +188,7 @@
     for i = 1,#p1 do
         local _pval = 0
         
-        if point[i] ~= nil do
+        if point[i] ~= nil then
           _pval = point[i]
         end
         
