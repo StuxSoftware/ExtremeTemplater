@@ -225,6 +225,7 @@
       return _G.util.ass_color(r,g,b)
     end
     return _G.util.ass_style_color(r,g,b,a)
+  end
   
   -----------------------------------------------------------------------------
   -- Affine Transformations                                                  --
