@@ -186,12 +186,6 @@
     
     local result_p = {}
     for i = 1,#p1 do
-        local _pval = 0
-        
-        if point[i] ~= nil then
-          _pval = point[i]
-        end
-        
         result_p[i] = p1[i] + (p2[i]-p1[i])*rel_t
     end
     
