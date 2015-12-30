@@ -172,7 +172,7 @@
   end
   
   -- to(max, [pos, max_pos]) -> pos, max_pos
-  tenv.to = function(max, pos, max_pos)
+  tenv.to = function(offset, pos, max_pos)
     pos, max_pos = timing_defaults(pos, max_pos)
     local max_pos = max_pos-offset
     if offset>=pos then
