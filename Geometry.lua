@@ -145,12 +145,19 @@
     local bern = function(t, i, n)
       return b(i, n) * t^i * (1-t)^(n-i)
     end
-    local point = {0,0}
+    local point = {}
     local n = #p-1
     for i = 0,n do
       local bern = bin(i,n) * t^i * (1-t)^(n-i)
-      point[1] = point[1] + p[i+1][1] * bern
-      point[2] = point[2] + p[i+1][2] * bern
+      for j = 1,#(p[i+1]) do
+        local _pval = 0
+        
+        if point[j] ~= nil do
+          _pval = point[j]
+        end
+        
+        point[j] = _pval + p[i+1][j] * bern
+      end
     end
     return point
   end
@@ -177,11 +184,19 @@
     p1 = edges[p_edge]
     p2 = edges[p_edge+1]
     
+    local result_p = {}
+    for i = 1,#p1 do
+        local _pval = 0
+        
+        if point[i] ~= nil do
+          _pval = point[i]
+        end
+        
+        result_p[i] = p1[i] + (p2[i]-p1[i])*rel_t
+    end
+    
     -- Interpolate the point.
-    return {
-      p1[1]+(p2[1]-p1[1])*rel_t,
-      p1[2]+(p2[2]-p1[2])*rel_t
-    }
+    return result_p
   end
   
   -- pos(x,y=nil) -> "\\pos(#{x},#{y})"
@@ -192,6 +207,24 @@
     end
     return "\\pos(" .. _G.tostring(x) .. "," .. _G.tostring(y) .. ")"
   end
+  
+  -- color(r,g=nil,b=nil, a=nil) -> "&H(aa)bbggrr&"
+  -- Prints a color from the calculated geometry.
+  -- If a is given or r is a table with four entries, a ass_style_color will be returned.
+  -- Otherwise a normal color.
+  tenv.color = function(r, g, b, a)
+    if g == nil then
+      if #r == 3 then
+        r,g,b = _G.unpack(r)
+      else
+        r,g,b,a = _G.unpack(r)
+      end
+    end
+    
+    if a == nil then
+      return _G.util.ass_color(r,g,b)
+    end
+    return _G.util.ass_style_color(r,g,b,a)
   
   -----------------------------------------------------------------------------
   -- Affine Transformations                                                  --
