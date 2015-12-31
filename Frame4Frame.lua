@@ -236,14 +236,14 @@
   tenv.mod_max = function(change, pos, max_pos)
     pos, max_pos = timing_defaults(pos, max_pos)
     local new_max = max_pos+change
-    return min(pos, new_max), new_max
+    return math.min(pos, new_max), new_max
   end
   
   -- mod_max(change, [pos, max_pos]) -> pos, max_pos
   tenv.mod_both = function(change_pos, change_max, pos, max_pos)
     pos, max_pos = mod_max(change_max, pos, max_pos)
     pos = pos+change_pos
-    return min(pos, new_max), max_pos
+    return math.min(pos, new_max), max_pos
   end
   
   ------------------------------------------------------------------------
