@@ -228,6 +228,15 @@
     return _G.util.ass_style_color(r,g,b,a)
   end
   
+  -- fsc(x,y=nil) -> "\fscx${x}\fscy${y}"
+  -- Applies font-scaling
+  tenv.fsc = function(x,y)
+    if y == nil then
+      x, y = x
+    end
+    return "\\fscx" .. _G.tostring(x) .. "\\fscy" .. _G.tostring(y)
+  end
+  
   -----------------------------------------------------------------------------
   -- Affine Transformations                                                  --
   -----------------------------------------------------------------------------
