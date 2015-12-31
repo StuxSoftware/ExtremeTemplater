@@ -147,7 +147,25 @@
   end
   
   ------------------------------------------------------------------------
-  -- Frame 4 Frame Base                                                 --
+  -- Frame 4 Frame Timing Values                                        --
+  ------------------------------------------------------------------------
+  
+  local _timing_bases = {
+    loop = function() return tenv.j, tenv.maxj end,
+    line = function() return tenv.line.start_time-tenv.orgline.start_time, tenv.orgline.duration end,
+    syl = function() return tenv.line.start_time-tenv.basesyl.start_time, tenv.orgline.duration end,
+    syln = function() return tenv.syl.i, #tenv.line.kara end
+  }
+  
+  tenv.t = function(type, ...)
+    local j, maxj = _timing_bases[type](...)
+    j = math.max(1, j)
+    maxj = math.max(1, maxj)
+    return j, maxj
+  end
+  
+  ------------------------------------------------------------------------
+  -- Frame 4 Frame Timing Operations                                    --
   ------------------------------------------------------------------------
   
   -- These functions defined in this scope are the basic functions needed
@@ -184,6 +202,10 @@
   tenv.fromto = function(from, to, pos, max_pos)
     return tenv.from(from, tenv.to(to, pos, max_pos))
   end
+  
+  ------------------------------------------------------------------------
+  -- Frame 4 Frame Base                                                 --
+  ------------------------------------------------------------------------
 
   -- distribute([j, [maxj]]) -> ""
   -- Will distribute all times.
