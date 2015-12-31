@@ -74,7 +74,7 @@
         value = _G.tonumber(value)
       elseif starts(value, "&H") and ends(value, "&") then
         local length = _G.unicode.len(value)
-        r,g,b,a = _G.util.extract_color(value)
+        local r,g,b,a = _G.util.extract_color(value)
         
         if length == 3+2 then
           value = a
