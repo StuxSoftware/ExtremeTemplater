@@ -154,7 +154,7 @@
     local point = {}
     local n = #p-1
     for i = 0,n do
-      local bern = bern(t,i,n)
+      local bp = bern(t,i,n)
       for j = 1,#(p[i+1]) do
         local _pval = 0
         
@@ -162,7 +162,7 @@
           _pval = point[j]
         end
         
-        point[j] = _pval + p[i+1][j] * bern
+        point[j] = _pval + p[i+1][j] * bp
       end
     end
     return point
