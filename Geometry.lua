@@ -149,7 +149,7 @@
       return (fac(n)/(fac(i)*fac(n-i)))
     end
     local bern = function(t, i, n)
-      return b(i, n) * t^i * c(1-t)^c(n-i)
+      return bin(i, n) * t^i * c(1-t)^c(n-i)
     end
     local point = {}
     local n = #p-1
