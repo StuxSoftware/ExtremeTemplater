@@ -1,6 +1,12 @@
 (function()
   -- Some Internal Functions
   
+  -- c(...) -> ...
+  -- Fucking Minifier
+  local function c(...)
+    return ...
+  end
+  
   -- foldr(function, default_value, table)
   -- e.g: foldr(operator.mul, 1, {1,2,3,4,5}) -> 120
   local function foldr(func, val, tbl)
@@ -83,7 +89,7 @@
   end
   
   local truediv = function(a,b)
-    return (a - (a%b))/b
+    return c(a - c(a%b))/b
   end
   
   -- bind1(func, binding_value_for_1st)
@@ -110,7 +116,7 @@
   -- TODO How to lazy evaluate in Lua? (thinking with coroutine)
   local enumFromTo = function (from,to)
      local newtbl = {}
-     local step = bind2(operator[(from < to) and "add" or "sub"], 1)
+     local step = bind2(operator[c(from < to) and "add" or "sub"], 1)
      local val = from
      while val <= to do
          _G.table.insert(newtbl, _G.table.getn(newtbl)+1, val)
@@ -143,12 +149,12 @@
       return (fac(n)/(fac(i)*fac(n-i)))
     end
     local bern = function(t, i, n)
-      return b(i, n) * t^i * (1-t)^(n-i)
+      return b(i, n) * t^i * c(1-t)^c(n-i)
     end
     local point = {}
     local n = #p-1
     for i = 0,n do
-      local bern = bin(i,n) * t^i * (1-t)^(n-i)
+      local bern = bern(t,i,n)
       for j = 1,#(p[i+1]) do
         local _pval = 0
         
@@ -178,7 +184,7 @@
     -- Get the actual points and calculate the relative
     -- position of the variable.
     local c_edges = #edges
-    local actual_t = t*(c_edges-1)
+    local actual_t = t*c(c_edges-1)
     local rel_t = actual_t%1
     local p_edge = math.floor(actual_t)+1
     
@@ -187,7 +193,7 @@
     
     local result_p = {}
     for i = 1,#p1 do
-        result_p[i] = p1[i] + (p2[i]-p1[i])*rel_t
+        result_p[i] = p1[i] + c(p2[i]-p1[i])*rel_t
     end
     
     -- Interpolate the point.
