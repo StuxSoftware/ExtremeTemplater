@@ -237,6 +237,13 @@
     return "\\fscx" .. _G.tostring(x) .. "\\fscy" .. _G.tostring(y)
   end
   
+  -- convert_color("&HBBGGRR(AA)&") -> {r,g,b}
+  -- Converts the Color.
+  tenv.convert_color = function(ass)
+    local r,g,b, _ = _G.util.extract_color(ass)
+    return {r,g,b}
+  end
+  
   -----------------------------------------------------------------------------
   -- Affine Transformations                                                  --
   -----------------------------------------------------------------------------
