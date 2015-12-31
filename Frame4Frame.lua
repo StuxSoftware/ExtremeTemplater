@@ -178,7 +178,8 @@
   end
   
   tenv.fix_scene = function(type, index, duration, pos, max_pos)
-    local func = nil
+    local func = function(duration, pos, max_pos) return pos, max_pos end
+    
     if type == "start" then
       func = tenv.scene_start
     elseif type == "end" then
