@@ -1,6 +1,9 @@
 (function()
   -- Some Internal Functions
   
+  -- lua minifier sucks.
+  local function c(...) return ... end
+  
   -- foldr(function, default_value, table)
   -- e.g: foldr(operator.mul, 1, {1,2,3,4,5}) -> 120
   -- Out Functional Library <http://lua-users.org/wiki/FunctionalLibrary>
@@ -147,7 +150,7 @@
   end
   
   ------------------------------------------------------------------------
-  -- Frame 4 Frame Timing Values                                        --
+  -- Frame 4 Frame Timing Helpers                                       --
   ------------------------------------------------------------------------
   
   local _timing_bases = {
@@ -162,6 +165,31 @@
     j = math.max(1, j)
     maxj = math.max(1, maxj)
     return j, maxj
+  end
+  
+  tenv.scene_end = function(duration, pos, max_pos)
+    local frame_no = _G.aegisub.frame_from_ms(duration*10) - max_pos
+    return tenv.mod_max(frame_no, pos, max_pos)
+  end
+  
+  tenv.scene_start = function(duration, pos, max_pos)
+    local frame_shifted = _G.aegisub.frame_from_ms(duration*10) - max_pos
+    return tenv.mod_both(frame_shifted, frame_shifted)
+  end
+  
+  tenv.fix_scene = function(type, index, duration, pos, max_pos)
+    local func = nil
+    if type == "start" then
+      func = tenv.scene_start
+    elseif type == "end" then
+      func = tenv.scene_end
+    end
+    
+    if syl.i ~= index then
+      return pos, max_pos
+    end
+    
+    return func(duration, pos, max_pos)
   end
   
   ------------------------------------------------------------------------
@@ -201,6 +229,20 @@
   -- slice(from, to, [pos, max_pos]) -> pos, max_pos
   tenv.fromto = function(from, to, pos, max_pos)
     return tenv.from(from, tenv.to(to, pos, max_pos))
+  end
+  
+  -- mod_max(change, [pos, max_pos]) -> pos, max_pos
+  tenv.mod_max = function(change, pos, max_pos)
+    pos, max_pos = timing_defaults(pos, max_pos)
+    local new_max = max_pos+change
+    return min(pos, new_max), new_max
+  end
+  
+  -- mod_max(change, [pos, max_pos]) -> pos, max_pos
+  tenv.mod_both = function(change_pos, change_max, pos, max_pos)
+    pos, max_pos = mod_max(change_max, pos, max_pos)
+    pos = pos+change_pos
+    return min(pos, new_max), max_pos
   end
   
   ------------------------------------------------------------------------
