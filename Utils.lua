@@ -94,4 +94,47 @@
     -- Return the table.
     return datatable
   end
+  
+  -- log(...) -> ""
+  -- Log the given data.
+  local function log(...)
+    local datatbl = {...}
+    
+    -- The Value renderer function.
+    local _render = function(obj)
+      if _G.type(obj) == "string" then
+        return "\"" .. obj .. "\""
+      elseif _G.type(obj) ~= "table" then
+        return _G.tostring(obj)
+      end
+      
+      local result = "{"
+      local i = 1
+      for name, value in _G.ipairs(datatbl) do
+        if i > 1 then
+          result = result .. ", "
+        end
+        
+        result = result .. "[" .. _render(name) .. "]=" .. _render(value)
+        
+        i = i+1
+      end
+      return result .. "}"
+    end
+  
+    line = ""
+    if #datatbl > 1 then
+      line = _render(datatbl)
+    elseif #datatbl == 1 then
+      line = _render(datatbl[1])
+    end
+    
+    if _G["aegisub"] ~= nil then
+      _G.aegisub.log(line + "\n")
+    else
+      _G.print(line)
+    end
+    
+    return ""
+  end
 end)()
