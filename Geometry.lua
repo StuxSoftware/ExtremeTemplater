@@ -232,7 +232,7 @@
   -- Applies font-scaling
   tenv.fsc = function(x,y)
     if y == nil then
-      x, y = x
+      x, y = _G.unpack(x)
     end
     return "\\fscx" .. _G.tostring(x) .. "\\fscy" .. _G.tostring(y)
   end
