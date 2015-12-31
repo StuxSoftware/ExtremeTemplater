@@ -42,18 +42,19 @@
   tenv.parse = function(default)
     -- Control defaults.
     if default == nil then
-      default = "true"
+      default = {}
     end
     
     -- Parse the line.
     local actor = tenv.line.actor
     local words = split(actor, " ")
     
-    local datatable = {}
+    local datatable = _G.table.copy(default)
+    
     for i = 1,#words do
       -- Parse the word.
       local word = split(words[i], ":", 2)
-      local value = default
+      local value = "true"
       
       -- Split on ":"
       if #word > 1 then
