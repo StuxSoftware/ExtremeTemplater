@@ -101,7 +101,8 @@
     local datatbl = {...}
     
     -- The Value renderer function.
-    local _render = function(obj)
+    -- F***ing minifiert preventing me from doing actual recursive things.
+    local __render = function(_render, obj)
       if _G.type(obj) == "string" then
         return "\"" .. obj .. "\""
       elseif _G.type(obj) ~= "table" then
@@ -115,11 +116,14 @@
           result = result .. ", "
         end
         
-        result = result .. "[" .. _render(name) .. "]=" .. _render(value)
+        result = result .. "[" .. _render(_render, name) .. "]=" .. _render(_render, value)
         
         i = i+1
       end
       return result .. "}"
+    end
+    local _render = function(obj)
+      return __render(__render, obj)
     end
   
     line = ""
