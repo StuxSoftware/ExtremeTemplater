@@ -97,7 +97,7 @@
   
   -- log(...) -> ""
   -- Log the given data.
-  local function log(...)
+  tenv.log = function(...)
     local datatbl = {...}
     
     -- The Value renderer function.
