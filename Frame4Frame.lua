@@ -97,7 +97,7 @@
   -- Pythons True-Div
   -- Selfwritten
   local truediv = function(a,b)
-    return (a - (a%b))/b
+    return c(a - c(a%b))/b
   end
   
   -- timing_defaults(pos, max_pos) -> pos, max_pos
@@ -183,7 +183,6 @@
     pos, max_pos = timing_defaults(pos, max_pos)
     
     local func = function(duration, pos, max_pos)
-      pos, max_pos = timing_defaults(pos, max_pos)
       return pos, max_pos
     end
     
@@ -269,7 +268,7 @@
     
     local start, stop = tenv.line.start_time, tenv.line.end_time
     local duration = tenv.line.duration
-    local newstart = math.floor(start + (j - 1) / maxj * duration)
+    local newstart = math.floor(start + c(j - 1) / maxj * duration)
     local newend = math.floor(start + j / maxj * duration)
     tenv.retime("set", newstart, newend)
     return ""
@@ -282,6 +281,6 @@
       length = (1000/(_G.aegisub.frame_from_ms(1000) or 20))
     end
     local start, stop = tenv.line.start_time, tenv.line.end_time
-    return math.max(math.floor((stop-start) / length), 1)
+    return math.max(math.floor(c(stop-start) / length), 1)
   end
 end)()
