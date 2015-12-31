@@ -172,7 +172,7 @@
       return edges[#edges]
     end
     if t<=0 then
-      return edges[0]
+      return edges[1]
     end
     
     -- Get the actual points and calculate the relative
