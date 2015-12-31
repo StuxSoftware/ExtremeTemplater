@@ -178,7 +178,10 @@
   end
   
   tenv.fix_scene = function(type, index, duration, pos, max_pos)
-    local func = function(duration, pos, max_pos) return pos, max_pos end
+    local func = function(duration, pos, max_pos)
+      pos, max_pos = timing_defaults(pos, max_pos)
+      return pos, max_pos
+    end
     
     if type == "start" then
       func = tenv.scene_start
