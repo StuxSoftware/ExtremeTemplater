@@ -168,16 +168,20 @@
   end
   
   tenv.scene_end = function(duration, pos, max_pos)
+    pos, max_pos = timing_defaults(pos, max_pos)
     local frame_no = _G.aegisub.frame_from_ms(duration*10) - max_pos
     return tenv.mod_max(frame_no, pos, max_pos)
   end
   
   tenv.scene_start = function(duration, pos, max_pos)
+    pos, max_pos = timing_defaults(pos, max_pos)
     local frame_shifted = _G.aegisub.frame_from_ms(duration*10) - max_pos
     return tenv.mod_both(frame_shifted, frame_shifted)
   end
   
   tenv.fix_scene = function(type, index, duration, pos, max_pos)
+    pos, max_pos = timing_defaults(pos, max_pos)
+    
     local func = function(duration, pos, max_pos)
       pos, max_pos = timing_defaults(pos, max_pos)
       return pos, max_pos
