@@ -26,7 +26,7 @@
     local pat = "(.-)" .. delim .. "()"
     local nb = 0
     local lastPos
-    for part, pos in string.gfind(str, pat) do
+    for part, pos in string.gmatch(str, pat) do
         nb = nb + 1
         result[nb] = part
         lastPos = pos
