@@ -181,8 +181,9 @@
     local actual_t = t*(c_edges-1)
     local rel_t = actual_t%1
     local p_edge = math.floor(actual_t)+1
-    p1 = edges[p_edge]
-    p2 = edges[p_edge+1]
+    
+    local p1 = edges[p_edge]
+    local p2 = edges[p_edge+1]
     
     local result_p = {}
     for i = 1,#p1 do
